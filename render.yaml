@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: ora-gpt-backend
+    env: python
+    region: singapore
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    rootDir: backend
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite+aiosqlite:///./ora_gpt.db
+      - key: BACKEND_CORS_ORIGINS
+        value: '["https://YOUR_NETLIFY_URL.netlify.app","http://localhost:3000"]'
+      - key: UPLOAD_DIR
+        value: ./uploads
+      - key: GROQ_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
